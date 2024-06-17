@@ -1,37 +1,18 @@
+
 import math
+
 # ANSI escape codes for color formatting
 GREEN = '\033[92m'
 ORANGE = '\033[93m'
 RED = '\033[91m'
 END_COLOR = '\033[0m'
 
-def hitung_luas_permukaan(r, t):
-    if r % 7 == 0:
-        luas_permukaan = 2 * 22 * r * (r + t) / 7
-    else:
-        luas_permukaan = 2 * 3.14 * r * (r + t)
-    return luas_permukaan
 
-def hitung_volume(r, t):
-    if r % 7 == 0:
-        volume = 22 * r**2 * t / 7
-    else:
-        volume = 3.14 * r**2 * t
-    return volume
+def format_number(num):
+    if isinstance(num, float) and num.is_integer():
+        return int(num)
+    return num
 
-def hitung_luas_selimut(r, t):
-    if r % 7 == 0:  # Cek apakah jari-jari adalah kelipatan dari 7
-        luas_selimut = 2 * 22 * r * t / 7
-    else:
-        luas_selimut = 2 * 3.14 * r * t
-    return luas_selimut
-
-def hitung_tutup_tabung(r):
-    if r % 7 == 0:   # Cek apakah nilai π adalah 22/7
-        luas_tutup_tabung = r**2 * 22 / 7 # Menggunakan 22/7 sebagai nilai π
-    else:
-        luas_tutup_tabung = r**2 * 3.14  # Menggunakan 3.14 sebagai nilai π
-    return luas_tutup_tabung
 
 while True:
     print(f"{ORANGE}==================================={END_COLOR}")
@@ -44,41 +25,128 @@ while True:
         break
     
     radius = float(input("Masukkan jari-jari tabung: "))
-
-    if radius % 7 == 0:  # Cek apakah jari-jari adalah kelipatan dari 7
-        pi_value = "22/7"
+    jari_jari = format_number(radius)
+    
+    if radius % 7 == 0:
+      pi_value = "22/7"
     else:
-        pi_value = "3.14"
-
+      pi_value = "3.14"
+    
     if pilihan == 1:
-        tinggi = float(input("Masukkan tinggi tabung: "))
-        luas_permukaan = hitung_luas_permukaan(radius, tinggi)
-        print(f"\n{GREEN}Diketahui{END_COLOR}\njari-jari: {radius}\ntinggi: {tinggi}\nπ: {pi_value}")
-        print(f"hitung_luas_permukaan tabung = 2 × {pi_value} × {radius} ({radius} × {tinggi})")
+      # LUAS PERMUKAAN TABUNG
+      # l = 2πr(r+t)
+        tinggi =float(input("Masukkan tinggi tabung: ")) 
+        tinggi_tabung = format_number(tinggi)
+        print(f"  rumus permukaan tabung {RED}2πr(r+t){END_COLOR}")
+        print(f"  {ORANGE}Diketahui{END_COLOR}")
+        print(f"  jari-jari: {jari_jari}")
+        print(f"  tinggi: {tinggi_tabung}")
+        print(f"  π: {pi_value}")
+        if radius % 7 == 0:
+            step1 = radius + tinggi_tabung
+            step2 = radius / 7
+            step3 = 2 * 22
+            step4 = step3 * step2
+            step5 = step4 * step1
+            
+            print(f"  2 x 22/7 × {jari_jari} × ( {jari_jari} + {tinggi_tabung} ) ")
+            print(f"  2 × 22/7 × {jari_jari} × {format_number(step1)}")
+            print(f"  2 × 22 × {format_number(step2)} × {format_number(step1)}")
+            print(f"  {format_number(step3)} × {format_number(step2)} × {format_number(step1)}")
+            print(f"  {format_number(step4)} × {format_number(step1)}")
+            print(f"  Luas permukaan tabung: {step5}\n")
+        else:
+            step1 = radius + tinggi
+            step2 = 2 * 3.14
+            step3 = step2 * radius
+            step4 = step3 * step1
+            
 
-        
-        print(f"{ORANGE}Luas permukaan tabung: {luas_permukaan:.2f}{END_COLOR}\n")
+            print(f"  2 x 3.14 × {jari_jari} × ( {jari_jari} + {tinggi_tabung} )")
+            print(f"  2 × 3.14 × {jari_jari} × {format_number(step1)}")
+            print(f"  {format_number(step2)} × {jari_jari} × {format_number(step1)}")
+            print(f"  {format_number(step3)} × {format_number(step1)}")
+            print(f"  Luas permukaan tabung: {format_number(step4)}\n")
     elif pilihan == 2:
-        tinggi = float(input("Masukkan tinggi tabung: "))
-        volume = hitung_volume(radius, tinggi)
-        print(f"\n{GREEN}Diketahui{END_COLOR}\njari-jari: {radius}\ntinggi: {tinggi}\nπ: {pi_value}")
-        print(f"hitung Volume tabung = {pi_value} × {radius}² × {tinggi}")
-        
-        print(f"{ORANGE}Volume tabung: {volume:.2f}{END_COLOR}\n")
+      # hitung volume tabung
+      # v = πr²t
+      tinggi =float(input("Masukkan tinggi tabung: "))   
+      tinggi_tabung = format_number(tinggi)
+      print(f"  rumus volume tabung {RED}2πr²t{END_COLOR}")
+      print(f"  {ORANGE}Diketahui{END_COLOR}")
+      print(f"  jari-jari: {jari_jari}")
+      print(f"  tinggi: {tinggi_tabung}")
+      print(f"  π: {pi_value}")
+      if radius % 7 == 0:
+        pangkat = radius**2
+        step1 = radius**2 / 7
+        step2 = step1 * 22
+        step3 = step2 * tinggi
+        print(f"  22/7 × {jari_jari}² × {tinggi_tabung}")
+        print(f"  22/7 × {format_number(pangkat)} × {tinggi_tabung}")
+        print(f"  22 × {format_number(step1)} × {tinggi_tabung}")
+        print(f"  {format_number(step2)} × {tinggi_tabung}")
+        print(f"  volume tabungnya adalah: {format_number(step3)}\n")
+      else:
+          pangkat = radius**2
+          step1 = 3.14 * pangkat
+          step2 = step1 * tinggi
+          print(f"  3,14 × {jari_jari}² × {tinggi_tabung}")
+          print(f"  3,14 × {format_number(pangkat)} × {tinggi_tabung}")
+          print(f"  {format_number(step1)} × {tinggi_tabung}")
+          print(f"  volume tabungnya adalah :  {format_number(step2)}\n")
     elif pilihan == 3:
-        tinggi = float(input("Masukkan tinggi tabung: "))
-        luas_selimut = hitung_luas_selimut(radius, tinggi)
-        print(f"\n{GREEN}Diketahui{END_COLOR}\njari-jari: {radius}\ntinggi: {tinggi}\nπ: {pi_value}")
-        print(f"hitung_luas_selimut = 2 × {pi_value} × {radius} × {tinggi}")
-       
-        
-        print(f"{ORANGE}Luas selimut tabung: {luas_selimut:.2f}{END_COLOR}\n")
+      # hitung luas Selimut
+      #  l = 2πrt
+      tinggi =float(input("Masukkan tinggi tabung: "))  
+      tinggi_tabung = format_number(tinggi)
+      print(f"  rumus luas Selimut tabung {RED}2πrt{END_COLOR}")
+      print(f"  {ORANGE}Diketahui{END_COLOR}")
+      print(f"  jari-jari: {jari_jari}")
+      print(f"  tinggi: {tinggi_tabung}")
+      print(f"  π: {pi_value}")
+      if radius % 7 == 0:
+          step1 = radius / 7
+          step2 = 2 * 22 
+          step3 = step2 * step1
+          step4 = step3 * tinggi
+          
+          print(f"  2 × 22/7 {jari_jari} × {tinggi_tabung}")
+          print(f"  2 × 22 × {format_number(step1)} × {tinggi_tabung}")
+          print(f"  {format_number(step2)} × {format_number(step1)} × {tinggi_tabung}")
+          print(f"  {format_number(step3)} × {tinggi_tabung}")
+          print(f"  luas Selimut tabung adalah: {format_number(step4)}\n")
+      else:
+          step1 = 2 * 3.14
+          step2 = step1 * radius 
+          step4 = step2 * tinggi
+          print(f"  2 × 3.14 × {jari_jari} × {tinggi_tabung}")
+          print(f"  {format_number(step1)} × {jari_jari} × {tinggi_tabung}")
+          print(f"  {format_number(step2)} × {tinggi_tabung}")
+          print(f"  luas Selimut tabung adalah: {format_number(step4)}\n")
     elif pilihan == 4:
-        luas_tutup_tabung = hitung_tutup_tabung(radius)
-        print(f"\n{GREEN}Diketahui{END_COLOR}\njari-jari: {radius}\nπ: {pi_value}")
-        
-        print(f"hitung_tutup_tabung = {radius}² × {pi_value}")
-       
-        print(f"{ORANGE}Luas tutup tabung: {luas_tutup_tabung:.2f}{END_COLOR}\n")
+      # luas tutup tabung
+      # l = π r²
+        print(f"  rumus tutup tabung {RED}πr²{END_COLOR}")
+        print(f"  {ORANGE}Diketahui{END_COLOR}")
+        print(f"  jari-jari: {jari_jari}")
+        print(f"  π: {pi_value}")
+        if radius % 7 == 0:
+          pangkat = radius**2
+          step1 = pangkat / 7
+          step2 = 22 * step1
+          
+          print(f"  22/7 × {jari_jari}²")
+          print(f"  22/7 {format_number(pangkat)}")
+          print(f"  22 × {format_number(step1)}")
+          print(f"  luas tutup tabung nya adalah: {format_number(step2)}\n")
+        else:
+          pangkat = radius**2
+          step1 = 3.14 * pangkat
+          print(f"  3.14 × {jari_jari}²")
+          print(f"  3.14 × {format_number(pangkat)}")
+          print(f"  luas tutup tabungnya adalah: {format_number(step1)}\n")
+          
+
     else:
         print("Pilihan tidak valid.")
